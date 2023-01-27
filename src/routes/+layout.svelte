@@ -1,9 +1,12 @@
 <script>
 	import Header from './Header.svelte';
+	import '@picocss/pico'
+	import WalletConnector from '$lib/components/WalletConnector/walletConnector.svelte';
 </script>
 
 <div class="app">
 	<Header />
+	<WalletConnector></WalletConnector>
     <main>
         <slot />
     </main>
