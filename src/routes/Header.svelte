@@ -3,7 +3,6 @@
 	import logo from '$lib/images/svelte-logo.svg';
 </script>
 
-<header>
 	<div class="corner">
 		<img src={logo} alt="Logo" />
 	</div>
@@ -18,7 +17,6 @@
 			</li>
 		</ul>
 	</nav>
-</header>
 
 <style>
 </style>
