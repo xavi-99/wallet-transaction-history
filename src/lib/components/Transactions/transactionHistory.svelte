@@ -1,20 +1,42 @@
-<script>
-	const tableHeaders = ['Header 1', 'Header 2', 'Header 3'];
-	const transactionData = [
-		{
-			field1: 'field1',
-			field2: 'field2',
-			field3: 'field3',
-			field4: 'field4'
-		}
-	];
+<script lang="ts"> 
+	import { onMount } from 'svelte';
+
+	import { Alchemy, AssetTransfersCategory, Network, type AssetTransfersResult } from 'alchemy-sdk';
+	
+	let transactionsHeaders : string[] = [];
+	let transactionsData : AssetTransfersResult[] = [];
+
+	const config = {
+		apiKey: import.meta.env.VITE_ALCHEMY_API_KEY,
+		network: Network.ETH_GOERLI
+	};
+
+	onMount(async () => {
+		const alchemy = new Alchemy(config);
+		// Fetch transactions going into the desired address.
+		const transactions = await alchemy.core.getAssetTransfers({
+			category: [AssetTransfersCategory.ERC20, AssetTransfersCategory.ERC721]
+		});
+		transactionsHeaders = Object.keys(transactions.transfers[0]);
+		transactionsData = transactions.transfers;
+	});
 </script>
 
 <table>
 	<thead>
-		{#each tableHeaders as header}
+		{#each transactionsHeaders as header}
 			<th>{header}</th>
 		{/each}
 	</thead>
+	<tbody>
+		{#each transactionsData as transaction}
+			<tr>
+				{#each Object.entries(transaction) as field}
+					<td>
+						{field}
+					</td>
+		{/each}
+			</tr>
+		{/each}
 	<tbody />
 </table>
