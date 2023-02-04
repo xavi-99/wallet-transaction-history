@@ -1,5 +1,7 @@
 
 <script>
+	import TransactionHistory from "../lib/components/Transactions/transactionHistory.svelte";
+
 </script>
 <svelte:head>
 	<title>Home</title>
@@ -9,6 +11,8 @@
 
 
 <section>
+
+	<TransactionHistory></TransactionHistory>
 	<h1>
 		<span class="welcome">
 			WELCOME

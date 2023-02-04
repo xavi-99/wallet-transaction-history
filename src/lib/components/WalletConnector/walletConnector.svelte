@@ -7,6 +7,7 @@
 	// chainData: store value is the current blockchain CAIP-2 data (when connected), see below.
 	import { defaultEvmStores as evm } from 'svelte-web3';
 
+	
 	enum ConnectAction {
 		Browser = 'Browser',
 		Localhost = 'Localhost',
@@ -15,21 +16,21 @@
 		Arbitrum = 'Arbitrum'
 	}
 
-	const handleOnConnect  = (action: ConnectAction) => {
-		debugger;
+	const handleOnConnect = (action: ConnectAction) => {
 		switch (action) {
 			case ConnectAction.Browser:
 				evm.setProvider();
 		}
 	};
+
+
 </script>
 
 {#if $connected}
-<span>CONNECTED {$connected}</span>
-<span>selectedAccount {$selectedAccount}</span>
-<span>chainId {$chainId}</span>
-<span>chainData {$chainData}</span>
-	
+	<span>CONNECTED {$connected}</span>
+	<span>selectedAccount {$selectedAccount}</span>
+	<span>chainId {$chainId}</span>
+	<span>chainData {$chainData}</span>
 {:else}
 	<button on:click={() => handleOnConnect(ConnectAction.Browser)}>Connect To Wallet</button>
 {/if}
