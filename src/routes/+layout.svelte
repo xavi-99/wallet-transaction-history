@@ -16,7 +16,7 @@
 </header>
 
 
-<main class="container">
+<main class="container" >
 	<slot />
 </main>
 <footer class="container" />
