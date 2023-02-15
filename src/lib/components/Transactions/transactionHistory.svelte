@@ -11,23 +11,23 @@
 
 	let transactionsHeaders: string[] = [];
 	// let transactionsData: AssetTransfersResult[] = [];
-	type AssetTransfersResult = {
+	type TransactionDataType = {
 		to: string | null;
 		from: string | null;
-		asset: string | null;
-		value: number | null;
+		value: number | null | string;
+		hash: string | null;
 	};
-	let transactionsData: AssetTransfersResult[] = [];
 
-	const transactionFieldsToDisplay = ['from', 'to', 'value', 'asset'];
+	let transactionsData: TransactionDataType[] = [];
+
+	const transactionFieldsToDisplay = ['from', 'to', 'value', 'hash'];
 
 	const config = {
 		apiKey: import.meta.env.VITE_ALCHEMY_API_KEY,
 		network: Network.ETH_GOERLI
 	};
 
-	const handleEditClick = (transaction: AssetTransfersResult) => {
-	};
+	const handleEditClick = (transaction: TransactionDataType) => {};
 
 	onMount(async () => {
 		const alchemy = new Alchemy(config);
@@ -36,11 +36,11 @@
 		});
 		if (transactions && transactions.transfers) {
 			transactionsHeaders = transactionFieldsToDisplay;
-			transactionsData = transactions.transfers.map(({ from, to, value, asset }) => ({
+			transactionsData = transactions.transfers.map(({ from, to, value, asset ,hash }) => ({
 				from,
 				to,
-				value,
-				asset
+				value: `${value} ${asset}`,
+				hash
 			}));
 		}
 	});
@@ -60,11 +60,9 @@
 						<td>
 							{#if key === 'from' || key === 'to'}
 								<div class="flex">
-									<div>
-										<button on:click={() => handleEditClick(transaction)} class="edit-tx-btn">
-											<img src={editButton} alt="Edit your transaction wallet address"/>
-										</button>
-									</div>
+									<button on:click={() => handleEditClick(transaction)} class="edit-tx-btn">
+										<img src={editButton} alt="Edit your transaction wallet address" />
+									</button>
 									<div>
 										{value}
 									</div>
@@ -85,11 +83,12 @@
 		display: flex;
 		flex-direction: columns;
 		align-items: center;
+		justify-content: center;
 	}
 	.flex div {
 		padding: 0 10px;
 	}
-	.flex div button {
-		margin-bottom: 0px;
+	table {
+		font-size: 0.8em;
 	}
 </style>

@@ -16,7 +16,14 @@
 </header>
 
 
-<main class="container" >
+<main class="container-fluid" >
 	<slot />
 </main>
 <footer class="container" />
+
+<style>
+	main{
+		width:95%;
+		margin:0 auto;
+	}
+</style>
