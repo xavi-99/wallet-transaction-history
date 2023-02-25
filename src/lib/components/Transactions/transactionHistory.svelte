@@ -1,60 +1,24 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import editButton from '$lib/images/edit.svg';
-	import {
-		Alchemy,
-		AssetTransfersCategory,
-		Network,
-		type AssetTransfersResponse
-		// type AssetTransfersResult
-	} from 'alchemy-sdk';
+	import type { TransactionDataType } from '../../../types/transaction.type';
 
-	let transactionsHeaders: string[] = [];
-	// let transactionsData: AssetTransfersResult[] = [];
-	type TransactionDataType = {
-		to: string | null;
-		from: string | null;
-		value: number | null | string;
-		hash: string | null;
-	};
+	export let headers: string[];
+	export let transactions: TransactionDataType[];
 
-	let transactionsData: TransactionDataType[] = [];
-
-	const transactionFieldsToDisplay = ['from', 'to', 'value', 'hash'];
-
-	const config = {
-		apiKey: import.meta.env.VITE_ALCHEMY_API_KEY,
-		network: Network.ETH_GOERLI
-	};
-
+	debugger;
 	const handleEditClick = (transaction: TransactionDataType) => {};
-
-	onMount(async () => {
-		const alchemy = new Alchemy(config);
-		const transactions: AssetTransfersResponse = await alchemy.core.getAssetTransfers({
-			category: [AssetTransfersCategory.ERC20, AssetTransfersCategory.ERC721]
-		});
-		if (transactions && transactions.transfers) {
-			transactionsHeaders = transactionFieldsToDisplay;
-			transactionsData = transactions.transfers.map(({ from, to, value, asset ,hash }) => ({
-				from,
-				to,
-				value: `${value} ${asset}`,
-				hash
-			}));
-		}
-	});
 </script>
 
 <figure>
 	<table role="grid">
 		<thead>
-			{#each transactionsHeaders as header}
+			{#each headers as header}
 				<th scope="col">{header}</th>
 			{/each}
 		</thead>
 		<tbody>
-			{#each transactionsData as transaction}
+			{#if transactions}
+			{#each transactions as transaction}
 				<tr>
 					{#each Object.entries(transaction) as [key, value]}
 						<td>
@@ -74,7 +38,8 @@
 					{/each}
 				</tr>
 			{/each}
-		</tbody><tbody />
+			{/if}
+		</tbody>
 	</table>
 </figure>
 
