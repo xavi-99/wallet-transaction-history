@@ -1,9 +1,8 @@
 <script>
 	import Header from './Header.svelte';
 	import '@picocss/pico';
-	import WalletConnector from '$lib/components/WalletConnector/walletConnector.svelte';
+	import Wallet from '$lib/components/Wallet/Wallet.svelte';
 </script>
-
 
 <svelte:head>
 	<title>Home Page</title>
@@ -12,7 +11,7 @@
 
 <header class="container">
 	<Header />
-	<WalletConnector />
+	<Wallet />
 </header>
 
 
